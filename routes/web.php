@@ -39,6 +39,10 @@ Route::middleware(['auth', 'isDosen'])->group(function () {
     Route::resource('/jadwal-kelas', JadwalKelasController::class);
 });
 
+Route::get('/rekap-absensi/{jadwalId}', [AbsensiController::class, 'rekap'])->middleware(['auth', 'isDosen'])->name('absensi.rekap');
+Route::middleware(['auth', 'isMahasiswa'])->get('/absensi/form-input/{jadwalId}', [AbsensiController::class, 'formInput'])->name('absensi.form');
+
+
 
 
 // 🎓 Mahasiswa: Absensi & Rekap

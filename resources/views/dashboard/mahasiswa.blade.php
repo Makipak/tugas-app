@@ -20,11 +20,12 @@
         @endforelse
     </ul>
 
-    @if($isPJMK)
-        <div class="mt-6">
-            <h3 class="text-lg font-bold text-green-600 mb-2">🎓 Kamu adalah Penanggung Jawab Kelas</h3>
-            <a href="{{ route('absensi.index') }}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Lakukan Absensi</a>
-        </div>
+    @foreach($jadwal as $j)
+    @if($j->mahasiswa_pjmk_id === $mahasiswa->id)
+        <a href="{{ route('absensi.form', ['jadwalId' => $j->id]) }}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Absensi {{ $j->nama_mata_kuliah }}
+        </a>
     @endif
+@endforeach
 </div>
 @endsection

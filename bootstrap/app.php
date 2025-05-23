@@ -13,8 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
+            'isMahasiswa' => \App\Http\Middleware\IsMahasiswa::class,
             'isDosen' => \App\Http\Middleware\IsDosen::class,
-    'isMahasiswa' => \App\Http\Middleware\IsMahasiswa::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
