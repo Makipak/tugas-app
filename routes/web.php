@@ -30,7 +30,7 @@ Route::post('/register-dosen', [RegisterDosenController::class, 'register']);
 // 📊 Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::middleware(['auth', 'isMahasiswa'])->get('/dashboard/mahasiswa', [DashboardController::class, 'mahasiswaDashboard'])->name('dashboard.mahasiswa');
+// Route::middleware(['auth', 'isMahasiswa'])->get('/dashboard/mahasiswa', [DashboardController::class, 'mahasiswaDashboard'])->name('dashboard.mahasiswa');
 
 Route::middleware(['auth', 'isDosen'])->get('/dashboard/dosen', [DashboardController::class, 'dosenDashboard'])->name('dashboard.dosen');
 
@@ -39,8 +39,18 @@ Route::middleware(['auth', 'isDosen'])->group(function () {
     Route::resource('/jadwal-kelas', JadwalKelasController::class);
 });
 
-Route::get('/rekap-absensi/{jadwalId}', [AbsensiController::class, 'rekap'])->middleware(['auth', 'isDosen'])->name('absensi.rekap');
-Route::middleware(['auth', 'isMahasiswa'])->get('/absensi/form-input/{jadwalId}', [AbsensiController::class, 'formInput'])->name('absensi.form');
+Route::middleware(['auth', 'isMahasiswa'])->group(function () {
+    Route::get('/dashboard/mahasiswa', [DashboardController::class, 'mahasiswaDashboard'])->name('dashboard.mahasiswa');
+
+    Route::get('/absensi/form-input/{jadwalId}', [AbsensiController::class, 'formInput'])->name('absensi.form');
+    Route::post('/absensi/store', [AbsensiController::class, 'store'])->name('absensi.store');
+
+    Route::get('/rekap-absensi-mahasiswa', [AbsensiController::class, 'index'])->name('absensi.rekap.mahasiswa');
+});
+
+
+// Route::get('/rekap-absensi/{jadwalId}', [AbsensiController::class, 'rekap'])->middleware(['auth', 'isDosen'])->name('absensi.rekap');
+// Route::middleware(['auth', 'isMahasiswa'])->get('/absensi/form-input/{jadwalId}', [AbsensiController::class, 'formInput'])->name('absensi.form');
 
 
 

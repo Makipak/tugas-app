@@ -27,7 +27,8 @@ class AbsensiController extends Controller
         abort(403, 'Kamu bukan PJMK untuk jadwal ini.');
     }
 
-        $mahasiswa = Mahasiswa::where('jadwal_kelas_id', $jadwalId)->get(); // atau logic sesuai kebutuhan
+        $mahasiswa = Mahasiswa::all();
+
 
     return view('mahasiswa.pjmk_absensi', [
         'jadwal' => $jadwal,
@@ -60,12 +61,12 @@ class AbsensiController extends Controller
         foreach ($request->mahasiswa_id as $mhsId) {
         Absensi::create([
             'jadwal_kelas_id' => $request->jadwal_kelas_id,
-            'mahasiswa_id' => $mhsId,
+            'mahasiswa_id' => $request->mahasiswa_id,
             'pertemuan_ke' => $request->pertemuan_ke,
-            'tanggal_absensi' => $request->tanggal_absensi,
-            'status_absensi' => $request->status_absensi[$mhsId] ?? 'Alpha',
-            'keterangan' => $request->keterangan[$mhsId] ?? null,
-            'diabsen_oleh' => Auth::user()->id,
+            'tanggal_absensi' => now(),
+            'status_absensi' => $request->status_absensi,
+            'keterangan' => $request->keterangan,
+            'diabsen_oleh' => Auth::user()->role === 'dosen' ? 'dosen' : 'pj_mk',
         ]);
         }
 
