@@ -10,20 +10,20 @@ class JadwalKelasController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        $dosen = $user->dosen;
+    $user = Auth::user();
+    $dosen = $user->dosen;
 
-        $jadwal = JadwalKelas::where('dosen_id', $dosen->id)->get();
+    $jadwalSaya = JadwalKelas::where('dosen_id', $dosen->id)->get();
+    $mahasiswa = Mahasiswa::all();
 
-        $mahasiswa = Mahasiswa::all();
-
-        return view('dosen.jadwal_kelas.index', compact('jadwal', 'mahasiswa'));
+    return view('dashboard.dosen', compact('jadwalSaya', 'mahasiswa'));
     }
+
 
     public function create()
     {
         $mahasiswa = Mahasiswa::all();
-        return view('dosen.jadwal_kelas.create', compact('mahasiswa'));
+        return view('dashboard.dosen', compact('mahasiswa'));
     }
 
     public function store(Request $request)
@@ -59,14 +59,14 @@ class JadwalKelasController extends Controller
     public function show($id)
     {
         $jadwal = JadwalKelas::findOrFail($id);
-        return view('dosen.jadwal_kelas.show', compact('jadwal'));
+        return view('dashboard.dosen', compact('jadwal'));
     }
 
     public function edit($id)
     {
         $jadwal = JadwalKelas::findOrFail($id);
         $mahasiswa = Mahasiswa::all();
-        return view('dosen.jadwal_kelas.edit', compact('jadwal', 'mahasiswa'));
+        return view('dashboard.dosen', compact('jadwal', 'mahasiswa'));
     }
 
     public function update(Request $request, $id)
