@@ -69,7 +69,7 @@
                             <td class="border px-4 py-2">{{ $jadwal->ruangan }}</td>
                             <td class="border px-4 py-2">{{ $jadwal->mahasiswaPJMK->nama_lengkap ?? '-' }}</td>
                             <td class="border px-4 py-2 text-center">
-                                <a href="{{ route('jadwal-kelas.show', $jadwal->id) }}" class="text-blue-600 hover:underline">Lihat</a>
+                                <a href="{{ route('rekap.absensi', $jadwal->id) }}" class="text-blue-600 hover:underline">Lihat</a>
                             </td>
                             <td class="border px-4 py-2 text-center">
                                 <a href="{{ route('jadwal-kelas.edit', $jadwal->id) }}" class="text-yellow-600 hover:underline mr-2">Edit</a>

@@ -37,6 +37,8 @@ Route::middleware(['auth', 'isDosen'])->get('/dashboard/dosen', [DashboardContro
 // 👨‍🏫 Dosen: Manage Jadwal Kelas
 Route::middleware(['auth', 'isDosen'])->group(function () {
     Route::resource('/jadwal-kelas', JadwalKelasController::class);
+    Route::get('/rekap-absensi/{jadwal}', [AbsensiController::class, 'rekap'])->name('rekap.absensi');
+
 });
 
 Route::middleware(['auth', 'isMahasiswa'])->group(function () {

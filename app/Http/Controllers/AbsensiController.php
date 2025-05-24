@@ -59,16 +59,17 @@ class AbsensiController extends Controller
         ]);
 
         foreach ($request->mahasiswa_id as $mhsId) {
-        Absensi::create([
+            Absensi::create([
             'jadwal_kelas_id' => $request->jadwal_kelas_id,
-            'mahasiswa_id' => $request->mahasiswa_id,
+            'mahasiswa_id' => $mhsId, // ✅ Pakai ID yang sedang di-loop
             'pertemuan_ke' => $request->pertemuan_ke,
             'tanggal_absensi' => now(),
-            'status_absensi' => $request->status_absensi,
-            'keterangan' => $request->keterangan,
+            'status_absensi' => $request->status_absensi[$mhsId] ?? 'Alpha', // ✅ Ambil sesuai ID
+            'keterangan' => $request->keterangan[$mhsId] ?? null, // ✅ Ambil sesuai ID
             'diabsen_oleh' => Auth::user()->role === 'dosen' ? 'dosen' : 'pj_mk',
-        ]);
+            ]);
         }
+
 
         return back()->with('success', 'Absensi berhasil disimpan.');
     }

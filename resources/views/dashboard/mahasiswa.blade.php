@@ -14,9 +14,9 @@
     <h3 class="text-lg font-semibold mb-2">📝 Rekap Absensi</h3>
     <ul class="mb-6">
         @forelse($rekapAbsensi as $absen)
-            <li>Pertemuan ke-{{ $absen->pertemuan }} - {{ $absen->status }}</li>
+    <li>Pertemuan ke-{{ $absen->pertemuan_ke }} - {{ $absen->status_absensi }}</li>
         @empty
-            <li>Belum ada data absensi.</li>
+    <li>Belum ada data absensi.</li>
         @endforelse
     </ul>
 
