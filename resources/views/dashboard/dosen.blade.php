@@ -84,7 +84,7 @@
     {{-- Baris Form Edit (Hidden by Default) --}}
     <tr id="form-{{ $jadwal->id }}" class="hidden">
         <td colspan="7" class="border px-4 py-4 bg-gray-100">
-            <form action="{{ route('jadwal-kelas.update', $jadwal->id) }}" method="POST" class="grid grid-cols-2 gap-4">
+            <form action="{{ route('jadwal.update.inline', $jadwal->id) }}" method="POST" class="grid grid-cols-2 gap-4">
                 @csrf
                 @method('PUT')
 
@@ -146,4 +146,5 @@
         }
     }
 </script>
+
 @endsection

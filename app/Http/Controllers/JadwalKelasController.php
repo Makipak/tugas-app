@@ -97,8 +97,10 @@ class JadwalKelasController extends Controller
     $jadwal = JadwalKelas::findOrFail($id);
     $jadwal->update([
         'hari' => $request->hari,
-        'jam' => $request->jam,
+        'jam_mulai' => $request->jam_mulai,
+        'jam_selesai' => $request->jam_selesai,
         'ruangan' => $request->ruangan,
+        'mahasiswa_pjmk_id' => $request->mahasiswa_pjmk_id,
     ]);
 
     return redirect()->route('dashboard.dosen')->with('success', 'Jadwal berhasil diupdate!');
