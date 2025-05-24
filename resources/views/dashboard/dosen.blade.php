@@ -62,28 +62,87 @@
                 </thead>
                 <tbody>
                     @foreach ($jadwalSaya as $jadwal)
-                        <tr>
-                            <td class="border px-4 py-2">{{ $jadwal->nama_mata_kuliah }}</td>
-                            <td class="border px-4 py-2">{{ $jadwal->hari }}</td>
-                            <td class="border px-4 py-2">{{ $jadwal->jam_mulai }} - {{ $jadwal->jam_selesai }}</td>
-                            <td class="border px-4 py-2">{{ $jadwal->ruangan }}</td>
-                            <td class="border px-4 py-2">{{ $jadwal->mahasiswaPJMK->nama_lengkap ?? '-' }}</td>
-                            <td class="border px-4 py-2 text-center">
-                                <a href="{{ route('rekap.absensi', $jadwal->id) }}" class="text-blue-600 hover:underline">Lihat</a>
-                            </td>
-                            <td class="border px-4 py-2 text-center">
-                                <a href="{{ route('jadwal-kelas.edit', $jadwal->id) }}" class="text-yellow-600 hover:underline mr-2">Edit</a>
-                                <form action="{{ route('jadwal-kelas.destroy', $jadwal->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Yakin hapus jadwal ini?')">Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+    <tr>
+        <td class="border px-4 py-2">{{ $jadwal->nama_mata_kuliah }}</td>
+        <td class="border px-4 py-2">{{ $jadwal->hari }}</td>
+        <td class="border px-4 py-2">{{ $jadwal->jam_mulai }} - {{ $jadwal->jam_selesai }}</td>
+        <td class="border px-4 py-2">{{ $jadwal->ruangan }}</td>
+        <td class="border px-4 py-2">{{ $jadwal->mahasiswaPJMK->nama_lengkap ?? '-' }}</td>
+        <td class="border px-4 py-2 text-center">
+            <a href="{{ route('rekap.absensi', $jadwal->id) }}" class="text-blue-600 hover:underline">Lihat</a>
+        </td>
+        <td class="border px-4 py-2 text-center">
+            <button onclick="toggleForm({{ $jadwal->id }})" class="text-yellow-600 hover:underline mr-2">Edit</button>
+            <form action="{{ route('jadwal-kelas.destroy', $jadwal->id) }}" method="POST" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Yakin hapus jadwal ini?')">Hapus</button>
+            </form>
+        </td>
+    </tr>
+
+    {{-- Baris Form Edit (Hidden by Default) --}}
+    <tr id="form-{{ $jadwal->id }}" class="hidden">
+        <td colspan="7" class="border px-4 py-4 bg-gray-100">
+            <form action="{{ route('jadwal-kelas.update', $jadwal->id) }}" method="POST" class="grid grid-cols-2 gap-4">
+                @csrf
+                @method('PUT')
+
+                <div>
+                    <label class="block text-sm font-medium">Hari</label>
+                    <input type="text" name="hari" value="{{ $jadwal->hari }}" class="mt-1 block w-full border border-gray-300 rounded px-2 py-1">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium">Jam Mulai</label>
+                    <input type="time" name="jam_mulai" value="{{ $jadwal->jam_mulai }}" class="mt-1 block w-full border border-gray-300 rounded px-2 py-1">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium">Jam Selesai</label>
+                    <input type="time" name="jam_selesai" value="{{ $jadwal->jam_selesai }}" class="mt-1 block w-full border border-gray-300 rounded px-2 py-1">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium">Ruangan</label>
+                    <input type="text" name="ruangan" value="{{ $jadwal->ruangan }}" class="mt-1 block w-full border border-gray-300 rounded px-2 py-1">
+                </div>
+
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium">Penanggung Jawab (PJMK)</label>
+                    <select name="pjmk_id" class="mt-1 block w-full border border-gray-300 rounded px-2 py-1">
+                        <option value="">-- Pilih Mahasiswa --</option>
+                        @foreach ($mahasiswa as $mhs)
+                            <option value="{{ $mhs->id }}" {{ $jadwal->pjmk_id == $mhs->id ? 'selected' : '' }}>
+                                {{ $mhs->nama_lengkap }} ({{ $mhs->nim }})
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-span-2 flex justify-end gap-2">
+                    <button type="button" onclick="toggleForm({{ $jadwal->id }})" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
+                </div>
+            </form>
+        </td>
+    </tr>
+@endforeach
+
                 </tbody>
             </table>
         @endif
     </div>
 </div>
+
+<script>
+    function toggleForm(id) {
+        const row = document.getElementById(`form-${id}`);
+        if (row.classList.contains('hidden')) {
+            row.classList.remove('hidden');
+        } else {
+            row.classList.add('hidden');
+        }
+    }
+</script>
 @endsection

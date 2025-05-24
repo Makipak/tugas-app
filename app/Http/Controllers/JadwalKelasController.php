@@ -64,10 +64,13 @@ class JadwalKelasController extends Controller
 
     public function edit($id)
     {
-        $jadwal = JadwalKelas::findOrFail($id);
-        $mahasiswa = Mahasiswa::all();
-        return view('dashboard.dosen', compact('jadwal', 'mahasiswa'));
+    $jadwal = JadwalKelas::findOrFail($id);
+    $mahasiswas = Mahasiswa::all();
+
+    return view('jadwal.edit', compact('jadwal', 'mahasiswas'));
     }
+
+
 
     public function update(Request $request, $id)
     {
