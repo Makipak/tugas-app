@@ -12,13 +12,21 @@
     </ul>
 
     <h3 class="text-lg font-semibold mb-2">📝 Rekap Absensi</h3>
-    <ul class="mb-6">
-        @forelse($rekapAbsensi as $absen)
-    <li>Pertemuan ke-{{ $absen->pertemuan_ke }} - {{ $absen->status_absensi }}</li>
-        @empty
-    <li>Belum ada data absensi.</li>
-        @endforelse
-    </ul>
+
+@forelse($rekapAbsensi as $jadwalId => $absensis)
+    <div class="mb-4">
+        <h4 class="font-bold">{{ optional($absensis->first()->jadwalKelas)->nama_mata_kuliah }}</h4>
+        <ul class="list-disc ml-6">
+            @foreach ($absensis as $absen)
+                <li>Pertemuan ke-{{ $absen->pertemuan_ke }} - {{ $absen->status_absensi }} ({{ $absen->tanggal_absensi }})</li>
+            @endforeach
+        </ul>
+    </div>
+@empty
+    <p>Belum ada data absensi.</p>
+@endforelse
+
+
 
     @foreach($jadwal as $j)
     @if($j->mahasiswa_pjmk_id === $mahasiswa->id)

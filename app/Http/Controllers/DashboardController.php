@@ -18,7 +18,11 @@ class DashboardController extends Controller
     $mahasiswa = $user->mahasiswa;
 
     $jadwal = JadwalKelas::with('dosen')->get();
-    $rekapAbsensi = Absensi::where('mahasiswa_id', $mahasiswa->id)->get();
+    $rekapAbsensi = Absensi::with('jadwalKelas')
+    ->where('mahasiswa_id', $mahasiswa->id)
+    ->orderBy('tanggal_absensi')
+    ->get()
+    ->groupBy('jadwal_kelas_id');
 
     // Cek apakah mahasiswa ini terdaftar sebagai PJMK di salah satu jadwal
     $isPJMK = JadwalKelas::where('mahasiswa_pjmk_id', $mahasiswa->id)->exists();
