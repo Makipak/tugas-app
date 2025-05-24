@@ -27,12 +27,19 @@ class AbsensiController extends Controller
         abort(403, 'Kamu bukan PJMK untuk jadwal ini.');
     }
 
+        
+        // Hitung pertemuan terakhir
+        $lastPertemuan = Absensi::where('jadwal_kelas_id', $jadwal->id)
+            ->max('pertemuan_ke');
+
+        $pertemuanKe = $lastPertemuan ? $lastPertemuan + 1 : 1;
+
         $mahasiswa = Mahasiswa::all();
 
 
     return view('mahasiswa.pjmk_absensi', [
         'jadwal' => $jadwal,
-        'pertemuanKe' => 1,
+        'pertemuanKe' => $pertemuanKe,
         'mahasiswa' => $mahasiswa
     ]);
     }
