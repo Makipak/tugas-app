@@ -92,6 +92,19 @@ class JadwalKelasController extends Controller
         return redirect()->route('jadwal-kelas.index')->with('success', 'Jadwal berhasil diperbarui.');
     }
 
+    public function updateInline(Request $request, $id)
+{
+    $jadwal = JadwalKelas::findOrFail($id);
+    $jadwal->update([
+        'hari' => $request->hari,
+        'jam' => $request->jam,
+        'ruangan' => $request->ruangan,
+    ]);
+
+    return redirect()->route('dashboard.dosen')->with('success', 'Jadwal berhasil diupdate!');
+}
+
+
     public function destroy($id)
     {
         $jadwal = JadwalKelas::findOrFail($id);

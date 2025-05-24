@@ -110,14 +110,15 @@
 
                 <div class="col-span-2">
                     <label class="block text-sm font-medium">Penanggung Jawab (PJMK)</label>
-                    <select name="pjmk_id" class="mt-1 block w-full border border-gray-300 rounded px-2 py-1">
-                        <option value="">-- Pilih Mahasiswa --</option>
-                        @foreach ($mahasiswa as $mhs)
-                            <option value="{{ $mhs->id }}" {{ $jadwal->pjmk_id == $mhs->id ? 'selected' : '' }}>
-                                {{ $mhs->nama_lengkap }} ({{ $mhs->nim }})
-                            </option>
-                        @endforeach
-                    </select>
+                    <select name="mahasiswa_pjmk_id" class="mt-1 block w-full border border-gray-300 rounded px-2 py-1">
+    <option value="">-- Pilih Mahasiswa --</option>
+    @foreach ($mahasiswa as $mhs)
+        <option value="{{ $mhs->id }}" {{ $jadwal->mahasiswa_pjmk_id == $mhs->id ? 'selected' : '' }}>
+            {{ $mhs->nama_lengkap }} ({{ $mhs->nim }})
+        </option>
+    @endforeach
+</select>
+
                 </div>
 
                 <div class="col-span-2 flex justify-end gap-2">

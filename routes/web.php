@@ -55,6 +55,7 @@ Route::middleware(['auth', 'isMahasiswa'])->group(function () {
 // Route::middleware(['auth', 'isMahasiswa'])->get('/absensi/form-input/{jadwalId}', [AbsensiController::class, 'formInput'])->name('absensi.form');
 
 
+Route::put('/jadwal/update-inline/{id}', [JadwalKelasController::class, 'updateInline'])->name('jadwal.update.inline');
 
 
 // 🎓 Mahasiswa: Absensi & Rekap
